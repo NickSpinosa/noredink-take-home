@@ -4,10 +4,8 @@ import com.nick.spinosa.noredinktakehome.beans.Question;
 import com.nick.spinosa.noredinktakehome.beans.Strand;
 import com.nick.spinosa.noredinktakehome.persistence.InMemoryQuestionStore;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class distributor {
 
@@ -15,7 +13,6 @@ public class distributor {
 
 
   public List<Question> distributeQuestions(int numberOfQuestions) {
-
     List<Question> questions = new ArrayList<>();
     Map<Long, Long> strandUsage = generateStrandUsageMap();
     Map<Long, Long> standardUsage = generateStandardUsageMap();
@@ -28,7 +25,7 @@ public class distributor {
       Long standardId = getLeastAskedStandardInStrand(strandId, standardUsage);
 
       // find the question with that standard with the lowest usage
-      Question question = getLowestUsedQuestionByStrand(standardId);
+      Question question = getLowestUsedQuestionByStandard(standardId);
 
       // increment usage on question, and increment above standard/strand maps
       question.incrementUsage();
@@ -42,16 +39,46 @@ public class distributor {
     return questions;
   }
 
-  private Question getLowestUsedQuestionByStrand(Long strandId) {
-    return null;
+  private Question getLowestUsedQuestionByStandard(Long standardId) {
+    List<Question> sortedQuestions = store.getQuestionsByStandardId(standardId);
+
+    sortedQuestions.sort((Question a, Question b) -> {
+      if(a.getUsage() == b.getUsage()) {
+        return 0;
+      }
+      return a.getUsage() - b.getUsage();
+    });
+
+    return sortedQuestions.get(0);
   }
 
   private Long getLeastAskedStrand(Map<Long, Long> strandUsageMap) {
-    return null;
+    Map.Entry<Long, Long> leastUsedStrand = null;
+
+    for(Map.Entry<Long, Long> entry: strandUsageMap.entrySet()) {
+      if (leastUsedStrand == null || entry.getValue() < leastUsedStrand.getValue()) {
+        leastUsedStrand = entry;
+      }
+    }
+
+    return leastUsedStrand.getKey();
   }
 
   private Long getLeastAskedStandardInStrand(Long strandId, Map<Long, Long> standardUsage) {
-    return null;
+    Map.Entry<Long, Long> leastUsedStandard = null;
+    Set<Map.Entry<Long, Long>> entries = standardUsage
+            .entrySet()
+            .stream()
+            .filter(e -> store.isStandardInStrand(e.getValue(), strandId))
+            .collect(Collectors.toSet());
+
+    for (Map.Entry<Long, Long> entry: entries) {
+      if(leastUsedStandard == null || entry.getValue() < leastUsedStandard.getValue()) {
+        leastUsedStandard = entry;
+      }
+    }
+
+    return leastUsedStandard.getValue();
   }
 
   // generates a map from strand id to the number of questions initialized at 0

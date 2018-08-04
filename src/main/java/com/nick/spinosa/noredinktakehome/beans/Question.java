@@ -6,18 +6,18 @@ public class Question {
   private Long standardId;
   private Long id;
   private double difficulty;
-  private Long usage;
+  private int usage;
 
 
   public void incrementUsage() {
     usage++;
   }
 
-  public Long getUsage() {
+  public int getUsage() {
     return usage;
   }
 
-  public Question setUsage(Long usage) {
+  public Question setUsage(int usage) {
     this.usage = usage;
     return this;
   }
