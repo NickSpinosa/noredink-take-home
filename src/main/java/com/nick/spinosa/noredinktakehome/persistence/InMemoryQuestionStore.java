@@ -5,7 +5,7 @@ import com.nick.spinosa.noredinktakehome.beans.Strand;
 
 import java.util.*;
 
-public class InMemoryQuestionStore {
+public class InMemoryQuestionStore implements QuestionStore {
   // maps a standard id to the list of quesions associated to it
   private Map<Long, List<Question>> standardToQuestionMap = new HashMap<>();
   // maps a strand id to the set of standards associated to it

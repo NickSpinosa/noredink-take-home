@@ -3,13 +3,14 @@ package com.nick.spinosa.noredinktakehome;
 import com.nick.spinosa.noredinktakehome.beans.Question;
 import com.nick.spinosa.noredinktakehome.beans.Strand;
 import com.nick.spinosa.noredinktakehome.persistence.InMemoryQuestionStore;
+import com.nick.spinosa.noredinktakehome.persistence.QuestionStore;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class distributor {
+public class Distributor {
 
-  private InMemoryQuestionStore store;
+  private QuestionStore store;
 
 
   public List<Question> distributeQuestions(int numberOfQuestions) {
