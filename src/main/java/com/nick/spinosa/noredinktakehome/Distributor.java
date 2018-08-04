@@ -12,6 +12,10 @@ public class Distributor {
 
   private QuestionStore store;
 
+  public Distributor(QuestionStore store) {
+    this.store = store;
+  }
+
 
   public List<Question> distributeQuestions(int numberOfQuestions) {
     List<Question> questions = new ArrayList<>();

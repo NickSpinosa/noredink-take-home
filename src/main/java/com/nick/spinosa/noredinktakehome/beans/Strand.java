@@ -4,6 +4,15 @@ public class Strand {
   private String name;
   private Long id;
 
+  public String getName() {
+    return name;
+  }
+
+  public Strand setName(String name) {
+    this.name = name;
+    return this;
+  }
+
   public Long getId() {
     return id;
   }

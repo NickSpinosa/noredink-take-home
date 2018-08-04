@@ -8,6 +8,26 @@ public class Question {
   private double difficulty;
   private int usage;
 
+  public Question(
+          String name,
+          Long standardId,
+          Long id,
+          double difficulty,
+          int usage,
+          Long strandId,
+          String strandName) {
+    this.name = name;
+    this.standardId = standardId;
+    this.id = id;
+    this.difficulty = difficulty;
+    this.usage = usage;
+    Strand strand = new Strand();
+    strand.setId(strandId);
+    strand.setName(strandName);
+
+    this.strand = strand;
+  }
+
 
   public void incrementUsage() {
     usage++;
