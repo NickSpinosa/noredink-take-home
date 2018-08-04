@@ -8,6 +8,15 @@ public class Strand {
     return name;
   }
 
+  public Strand () {
+
+  }
+
+  public Strand(String name, Long id) {
+    this.name = name;
+    this.id = id;
+  }
+
   public Strand setName(String name) {
     this.name = name;
     return this;
