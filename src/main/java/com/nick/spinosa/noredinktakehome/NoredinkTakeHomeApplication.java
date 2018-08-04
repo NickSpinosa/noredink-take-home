@@ -12,21 +12,20 @@ import java.util.stream.Collectors;
 public class NoredinkTakeHomeApplication {
 	private QuestionStore store = new InMemoryQuestionStore();
 
-	public static void main(int[] args) {
+	public static void main(String[] args) {
 
-//		SpringApplication app = new SpringApplication(NoredinkTakeHomeApplication.class);
-//		app.setBannerMode(Banner.Mode.OFF);
-		run(args);
-//		SpringApplication.run(NoredinkTakeHomeApplication.class, args);
+		SpringApplication app = new SpringApplication(NoredinkTakeHomeApplication.class);
+		app.setBannerMode(Banner.Mode.OFF);
+		app.run(args);
 	}
 
-	public static void run(int... args) {
-		System.out.println("HELLO WORLD");
-//		if(args.length > 0) {
-//			System.out.println("only 1 argument accepted: Number of Questions");
-//		} else {
-//			System.out.println(buildQuiz(args[0]));
-//		}
+
+	public void run(String... args) {
+		if(args.length > 0) {
+			System.out.println("only 1 argument accepted: Number of Questions");
+		} else {
+			System.out.println(buildQuiz(Integer.parseInt(args[0])));
+		}
 	}
 
 	public String buildQuiz(int numberOfQuestions) {
